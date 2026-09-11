@@ -6,7 +6,7 @@ This project analyzes customer churn for a telecommunications company to identif
 
 The ultimate goal of this analysis is to transform raw customer data into actionable, segment-specific recommendations across promotion, customer service, CRM, and marketing activation.
 
-🔗 **[View the full project presentation here](#)** *(https://nhichau97portfolio.my.canva.site/customer-churn-presentation)*
+🔗 **View the full project presentation here(#)** *(https://nhichau97portfolio.my.canva.site/customer-churn-presentation)*
 
 ---
 

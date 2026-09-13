@@ -15,4 +15,4 @@ The Boosted Tree model was selected, achieving an **R² of 0.88** and reducing M
 
 The analysis identified smoking status, BMI, and age as the main drivers of insurance costs.
 
-**Tools:** Python, Pandas, Matplotlib, SQL, Google BigQuery ML
+> **Tools:** Python, Pandas, Matplotlib, SQL, Google BigQuery ML.

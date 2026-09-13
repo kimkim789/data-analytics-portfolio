@@ -1,0 +1,56 @@
+Build model
+
+-- Kiểm tra cấu trúc dữ liệu và thống kê cơ bản
+SELECT
+  COUNT(*) as total_rows,
+  AVG(age) as avg_age,
+  AVG(bmi) as avg_bmi,
+  AVG(charges) as avg_charges
+FROM `project-chauhongyennhi-2025.DA04.insurance_cleaned`
+;
+
+-- Kiểm tra phân phối và giá trị khuyết thiếu (nếu có)
+SELECT
+  COUNTIF(age IS NULL) as missing_age,
+  COUNTIF(sex IS NULL) as missing_sex,
+  COUNTIF(bmi IS NULL) as missing_bmi,
+  COUNTIF(children IS NULL) as missing_children,
+  COUNTIF(smoker IS NULL) as missing_smoker,
+  COUNTIF(region IS NULL) as missing_region,
+  COUNTIF(charges IS NULL) as missing_charges
+FROM `project-chauhongyennhi-2025.DA04.insurance_cleaned`
+;
+
+-- MODEL 1: LINEAR REGRESSION
+-- Create model
+CREATE OR REPLACE MODEL `project-chauhongyennhi-2025.DA04.insurance_linear_model`
+OPTIONS(
+  model_type='linear_reg',
+  input_label_cols=['charges']
+)
+AS
+SELECT age, sex, bmi, children, smoker, region, charges
+FROM `project-chauhongyennhi-2025.DA04.insurance_cleaned`
+;
+
+-- Evaluate
+SELECT *
+FROM ML.EVALUATE(MODEL `project-chauhongyennhi-2025.DA04.insurance_linear_model`)
+;
+
+-- MODEL 2: BOOSTED TREE REGRESSION
+-- Create model
+CREATE OR REPLACE MODEL `project-chauhongyennhi-2025.DA04.insurance_boosted_tree`
+OPTIONS(
+  model_type='boosted_tree_regressor',
+  input_label_cols=['charges']
+)
+AS
+SELECT age, sex, bmi, children, smoker, region, charges
+FROM `project-chauhongyennhi-2025.DA04.insurance_cleaned`
+;
+
+-- Evaluate
+SELECT *
+FROM ML.EVALUATE(MODEL `project-chauhongyennhi-2025.DA04.insurance_boosted_tree`)
+;

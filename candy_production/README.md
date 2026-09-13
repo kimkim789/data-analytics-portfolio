@@ -14,4 +14,3 @@ The forecast can support production scheduling, inventory preparation, and workf
 
 **Tools:** Python, Pandas, Matplotlib, SQL, Google BigQuery ML
 
-> Course project completed using a public dataset.

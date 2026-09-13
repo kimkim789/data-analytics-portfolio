@@ -12,5 +12,5 @@ The analysis identified a recurring 12-month seasonal pattern, with production p
 
 The forecast can support production scheduling, inventory preparation, and workforce planning.
 
-**Tools:** Python, Pandas, Matplotlib, SQL, Google BigQuery ML
+> **Tools:** Python, Pandas, Matplotlib, SQL, Google BigQuery ML.
 

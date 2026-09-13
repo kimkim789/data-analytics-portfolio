@@ -1,0 +1,127 @@
+Build model
+
+-- Loading data
+
+SELECT *
+FROM `project-chauhongyennhi-2025.DA04.wine_scaled`
+LIMIT 10
+;
+
+-- Đếm số lượng mẫu
+
+SELECT  COUNT(*)
+FROM `project-chauhongyennhi-2025.DA04.wine_scaled`
+LIMIT 3
+;
+
+--------------------------------------------------------------------------------------------
+
+-- MODEL 1: K = 3
+
+CREATE OR REPLACE MODEL`project-chauhongyennhi-2025.DA04.wine_scaled_kmeans_k3`
+
+OPTIONS(
+  MODEL_TYPE='KMEANS',
+  NUM_CLUSTERS=3,
+  STANDARDIZE_FEATURES=FALSE
+)
+AS
+SELECT *
+FROM `project-chauhongyennhi-2025.DA04.wine_scaled`
+;
+
+-- Evaluation
+
+SELECT * FROM ML.EVALUATE(MODEL `project-chauhongyennhi-2025.DA04.wine_scaled_kmeans_k3`)
+;
+
+--------------------------------------------------------------------------------------------
+
+-- MODEL 2: K = 4
+
+CREATE OR REPLACE MODEL`project-chauhongyennhi-2025.DA04.wine_scaled_kmeans_k4`
+
+OPTIONS(
+  MODEL_TYPE='KMEANS',
+  NUM_CLUSTERS=4,
+  STANDARDIZE_FEATURES=FALSE
+)
+AS
+SELECT *
+FROM `project-chauhongyennhi-2025.DA04.wine_scaled`
+;
+--------------------------------------------------------------------------------------------
+
+-- Evaluation
+
+SELECT *
+FROM ML.EVALUATE
+(
+  MODEL `project-chauhongyennhi-2025.DA04.wine_scaled_kmeans_k4`
+)
+;
+
+-- Internal Clustering Evaluation
+
+SELECT 'KMeans_K3'
+AS model_name, davies_bouldin_index, mean_squared_distance
+FROM ML.EVALUATE
+(
+  MODEL `project-chauhongyennhi-2025.DA04.wine_scaled_kmeans_k3`
+)
+UNION ALL
+
+SELECT 'KMeans_K4'
+AS model_name, davies_bouldin_index, mean_squared_distance
+FROM ML.EVALUATE
+(
+  MODEL `project-chauhongyennhi-2025.DA04.wine_scaled_kmeans_k4`
+)
+
+;
+
+-- Cluster label of Model K=3
+
+SELECT centroid_id
+AS cluster_k3
+FROM ML.PREDICT
+(
+  MODEL `project-chauhongyennhi-2025.DA04.wine_scaled_kmeans_k3`,
+  TABLE `project-chauhongyennhi-2025.DA04.wine_scaled`
+)
+;
+
+-- Cluster label of Model K=4
+
+SELECT centroid_id
+AS cluster_k4
+FROM ML.PREDICT
+(
+  MODEL `wine_data.kmeans_k4`,
+  TABLE `project-chauhongyennhi-2025.DA04.wine_scaled`
+)
+;
+
+--------------------------------------------------------------------------------------------
+
+-- Export table 'wine_predictions_k3'
+CREATE OR REPLACE TABLE `project-chauhongyennhi-2025.DA04.wine_predictions_k3`
+AS
+SELECT *
+FROM ML.PREDICT
+(
+  MODEL `project-chauhongyennhi-2025.DA04.wine_scaled_kmeans_k3`,
+  TABLE `project-chauhongyennhi-2025.DA04.wine_scaled`
+)
+;
+
+-- Export table 'wine_predictions_k4'
+CREATE OR REPLACE TABLE `project-chauhongyennhi-2025.DA04.wine_predictions_k4`
+AS
+SELECT *
+FROM ML.PREDICT
+(
+  MODEL `project-chauhongyennhi-2025.DA04.wine_scaled_kmeans_k4`,
+  TABLE `project-chauhongyennhi-2025.DA04.wine_scaled`
+)
+;

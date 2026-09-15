@@ -1,6 +1,6 @@
 # Data Analytics Portfolio
 
-Hi, I'm **Yen Nhi Chau**, a marketing professional developing deeper expertise in data analytics and data-informed growth.
+Hi, I'm **Nhi Chau**, a marketing professional developing deeper expertise in data analytics and data-informed growth.
 
 This portfolio demonstrates how I use **Python, SQL, Tableau, and Google BigQuery ML** to turn business questions into structured analyses, actionable insights, and clear recommendations. The projects cover customer retention, classification, regression, time-series forecasting, and product segmentation.
 
